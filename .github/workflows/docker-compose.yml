@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins-new
+    ports:
+      - "8081:8080"      # Jenkins web UI
+      - "50000:50000"    # Agent/Slave port
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock  # Give Jenkins access to host Docker
+    user: root           # Run Jenkins as root to avoid permission issues
+    restart: unless-stopped
+
+volumes:
+  jenkins_home:
